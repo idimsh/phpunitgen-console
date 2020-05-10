@@ -62,7 +62,7 @@ class ConsoleServiceProvider extends ReflectionServiceProvider
     {
         $this->container->delegate(new ReflectionContainer());
 
-        $this->leagueContainer->add(FilesystemContract::class, LeagueFilesystem::make());
+        $this->container->add(FilesystemContract::class, LeagueFilesystem::make());
 
         foreach (self::DEFAULT_IMPLEMENTATIONS as $contract => $concrete) {
             $this->addDefinition($contract, $concrete);
