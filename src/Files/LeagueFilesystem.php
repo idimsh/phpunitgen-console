@@ -180,16 +180,24 @@ class LeagueFilesystem implements FilesystemContract
      */
     protected function getAbsolutePath(string $path): string
     {
-        if (Str::startsWith('/', $path)) {
-            return $path;
-        }
+        do {
+            if (Str::startsWith('/', $path)) {
+                $return = $path;
+                break;
+            }
 
-        if (DIRECTORY_SEPARATOR === '/') {
-            return $this->getRoot().$path;
-        }
-        return preg_match('#^[a-z]:#i', $path)
-            ? $path
-            : $this->getRoot().$path;
+            if (DIRECTORY_SEPARATOR === '/') {
+                $return = $this->getRoot() . $path;
+                break;
+            }
+
+            $return = preg_match('#^[a-z]:#i', $path)
+                ? $path
+                : $this->getRoot() . $path;
+            break;
+        } while (false);
+
+        return $return;
     }
 
     /**
