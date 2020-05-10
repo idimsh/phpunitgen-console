@@ -60,7 +60,7 @@ class ConsoleServiceProvider extends ReflectionServiceProvider
      */
     public function register()
     {
-        $this->leagueContainer->delegate(new ReflectionContainer());
+        $this->container->delegate(new ReflectionContainer());
 
         $this->leagueContainer->add(FilesystemContract::class, LeagueFilesystem::make());
 

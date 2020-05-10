@@ -51,9 +51,8 @@ class LeagueFilesystem implements FilesystemContract
      */
     public static function make(): self
     {
-        $localAdapter = new Local('/', LOCK_EX, Local::SKIP_LINKS);
-
-        return new static(new Filesystem($localAdapter), getcwd());
+        $localAdapter = new Local(str_replace('\\', '/', getcwd()), LOCK_EX, Local::SKIP_LINKS);
+        return new static(new Filesystem($localAdapter), str_replace('\\', '/', getcwd()));
     }
 
     /**
@@ -98,7 +97,7 @@ class LeagueFilesystem implements FilesystemContract
                 return $file['type'] !== 'file';
             })
             ->map(function (array $file) {
-                return '/'.$file['path'];
+                return $file['path'];
             })
             ->values();
     }
@@ -159,7 +158,7 @@ class LeagueFilesystem implements FilesystemContract
      */
     public function getRoot(): string
     {
-        return $this->currentWorkingDirectory.'/';
+        return $this->currentWorkingDirectory.DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -185,7 +184,12 @@ class LeagueFilesystem implements FilesystemContract
             return $path;
         }
 
-        return $this->getRoot().$path;
+        if (DIRECTORY_SEPARATOR === '/') {
+            return $this->getRoot().$path;
+        }
+        return preg_match('#^[a-z]:#i', $path)
+            ? $path
+            : $this->getRoot().$path;
     }
 
     /**

@@ -25,15 +25,21 @@
   "bin": [
     "bin/phpunitgen"
   ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url":  "git@github.com:idimsh/phpunitgen-core.git"
+    }
+  ],
   "require": {
     "php": "~7.2",
     "ext-json": "*",
     "league/container": "^3.3",
     "league/flysystem": "^1.0",
-    "ocramius/package-versions": "^1.4",
-    "phpunitgen/core": "^1.0",
-    "symfony/console": "^4.4 || ^5.0",
-    "symfony/stopwatch": "^4.3 || ^5.0",
+    "ocramius/package-versions": "^1.4.0",
+    "phpunitgen/core": "dev-master",
+    "symfony/console": "^4.4",
+    "symfony/stopwatch": "^4.3",
     "symfony/yaml": "^4.3 || ^5.0",
     "tightenco/collect": "^6.0"
   },
